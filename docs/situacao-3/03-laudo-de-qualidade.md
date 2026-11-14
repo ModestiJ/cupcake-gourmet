@@ -16,7 +16,7 @@
 
 | Indicador | Resultado | Meta | Situação |
 |---|---|---|---|
-| Testes automatizados | 83/83 passando | 100% | ✅ |
+| Testes automatizados | 84/84 passando | 100% | ✅ |
 | Cobertura de código | 94% | ≥ 70% (RNF06) | ✅ |
 | Cobertura das regras de negócio (`services.py`) | 98% | ≥ 70% | ✅ |
 | Histórias implementadas | 17/18 (US18 adiada para a v2) | Must + Should | ✅ |
@@ -38,7 +38,7 @@
 
 | ID | Origem (testador) | Descrição | Gravidade | Decisão | Correção aplicada (commit) | Evidência |
 |---|---|---|---|---|---|---|
-| B01 | | | | Corrigir / Adiar / Não procede | | print antes/depois |
+| B01 | ✏️ nome do testador | Erro 500 (“Algo deu errado”) ao criar conta no iPhone (Chrome), logo após a mensagem de senha curta. Causa: envio duplicado do formulário (D6). | Alta | Corrigir | ✏️ commit | print do erro + log do Render + teste de regressão |
 | S01 | | (sugestão) | — | | | |
 
 **Critério de decisão:** defeitos de gravidade alta ou média são corrigidos nesta versão. Sugestões entram se forem compatíveis com o escopo e com o prazo. As demais vão para o backlog da v2, com justificativa.

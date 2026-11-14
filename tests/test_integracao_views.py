@@ -65,6 +65,25 @@ def test_cadastro_valida_senha_email_e_lgpd(client, cliente):
     assert {"email", "senha", "confirmacao", "aceite"} <= set(erros)
 
 
+def test_cadastro_duplo_envio_nao_gera_500(client, cliente, monkeypatch):
+    """D6 (relatado por testador): duplo toque em "Criar conta" fazia as duas requisições
+    passarem pela checagem do form; a segunda estourava UNIQUE no banco → HTTP 500."""
+    from contas.forms import CadastroForm
+
+    # Simula a 2ª requisição da corrida: as checagens de e-mail único (clean_email e
+    # validate_unique) rodaram antes de a 1ª requisição gravar, então passaram.
+    monkeypatch.setattr(CadastroForm, "clean_email", lambda self: self.cleaned_data["email"].lower())
+    monkeypatch.setattr(CadastroForm, "validate_unique", lambda self: None)
+    r = client.post(reverse("contas:cadastro"), {
+        "nome": "Ana de Novo", "email": "ana@teste.com", "senha": "Cupcake#2026",
+        "confirmacao": "Cupcake#2026", "aceite": "on",
+    })
+    assert r.status_code == 200
+    assert "Já existe uma conta com este e-mail" in r.content.decode()
+    assert Usuario.objects.filter(email="ana@teste.com").count() == 1
+    assert "_auth_user_id" not in client.session
+
+
 def test_login_com_erro_mostra_mensagem(client, cliente):
     r = client.post(reverse("contas:entrar"), {"username": "ana@teste.com", "password": "errada"})
     assert "E-mail ou senha incorretos" in r.content.decode()

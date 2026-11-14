@@ -8,7 +8,7 @@ flowchart LR
     R[Requisitos<br/>US + RN + RNF] --> A[Análise<br/>UML + DER] --> AR[Arquitetura<br/>MVC + services] --> C[Código]
     end
     subgraph Validação
-    TU[Teste unitário<br/>41 testes] --> TI[Teste de integração<br/>37 testes] --> TS[Teste de sistema<br/>roteiro manual + CI em Postgres] --> TA[Teste de aceitação<br/>5 cenários Gherkin + 5 testadores]
+    TU[Teste unitário<br/>41 testes] --> TI[Teste de integração<br/>38 testes] --> TS[Teste de sistema<br/>roteiro manual + CI em Postgres] --> TA[Teste de aceitação<br/>5 cenários Gherkin + 5 testadores]
     end
     C -.-> TU
     AR -.-> TI
@@ -42,9 +42,9 @@ Executado em 14/11/2026 (Windows 11, Python 3.14.2, Django 6.0.10, SQLite). O CI
 | Nível | Testes | Passaram | Falharam |
 |---|---|---|---|
 | Unitário | 41 | 41 | 0 |
-| Integração | 37 | 37 | 0 |
+| Integração | 38 | 38 | 0 |
 | Aceitação | 5 | 5 | 0 |
-| **Total** | **83** | **83** | **0** |
+| **Total** | **84** | **84** | **0** |
 
 **Cobertura de código: 94%** (meta do RNF06: 70%)
 
@@ -68,6 +68,7 @@ Executado em 14/11/2026 (Windows 11, Python 3.14.2, Django 6.0.10, SQLite). O CI
 | D3 | Recusa de pagamento simulada (total terminando em ,13) era impossível de reproduzir com os preços reais | Revisão do manual (validação) | Botão "Simular pagamento recusado (teste)" + teste de nova tentativa |
 | D4 | Layout mobile parecia cortado nas capturas | Teste visual em 390 px | Falso positivo do navegador headless (largura mínima). Confirmado com iframe de 390 px. Sem alteração. |
 | D5 | **Avançar status e cancelar pedido quebravam no PostgreSQL** (`FOR UPDATE cannot be applied to the nullable side of an outer join`). Localmente (SQLite) passava, porque o SQLite ignora `FOR UPDATE`. | **CI em PostgreSQL** (13 testes falharam no 1º push) | `select_for_update(of=("self",))` trava só a tabela `pedido`/`produto`. Mostra por que o teste de sistema roda no mesmo SGBD de produção. |
+| D6 | **Erro 500 ao criar conta no iPhone** (`UniqueViolation usuario_email_key`). Duplo envio do formulário: as duas requisições passaram pela checagem de e-mail único antes de a primeira gravar, e a segunda foi barrada pelo UNIQUE do banco sem tratamento. A conta foi criada pela 1ª requisição. | **Testador externo** (validação), confirmado pelo log do Render | Servidor: `IntegrityError` tratado → mensagem "Já existe uma conta com este e-mail". Navegador: botões de envio travam após o 1º toque em todos os formulários. Teste de regressão `test_cadastro_duplo_envio_nao_gera_500`, que reproduz o erro sem a correção. |
 
 ## 4. Teste de sistema automatizado em produção
 

@@ -8,6 +8,26 @@
     if (msg && !window.confirm(msg)) e.preventDefault();
   });
 
+  // Evita envio duplicado (duplo toque no celular gerava 2 requisições – defeito D6).
+  // Roda depois da confirmação: só trava se o envio realmente for acontecer.
+  document.addEventListener("submit", function (e) {
+    var form = e.target;
+    if (e.defaultPrevented || form.method.toLowerCase() !== "post") return;
+    if (form.dataset.enviando) { e.preventDefault(); return; }
+    form.dataset.enviando = "1";
+    setTimeout(function () {
+      form.querySelectorAll("button[type=submit], button:not([type])").forEach(function (b) {
+        b.disabled = true;
+        b.setAttribute("aria-busy", "true");
+      });
+    }, 0);
+    // Libera de novo se a página continuar aberta (ex.: voltar no histórico).
+    setTimeout(function () { delete form.dataset.enviando; form.querySelectorAll("button[aria-busy]").forEach(function (b) { b.disabled = false; b.removeAttribute("aria-busy"); }); }, 8000);
+  });
+  window.addEventListener("pageshow", function (ev) {
+    if (ev.persisted) document.querySelectorAll("form[data-enviando]").forEach(function (f) { delete f.dataset.enviando; });
+  });
+
   // Botões +/- de quantidade.
   document.querySelectorAll("[data-qtd]").forEach(function (box) {
     var input = box.querySelector("input");

@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
-from django.db import transaction
+from django.db import IntegrityError, transaction
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.http import require_POST
@@ -25,10 +25,17 @@ def cadastrar(request):
         return redirect("catalogo:vitrine")
     form = CadastroForm(request.POST or None)
     if request.method == "POST" and form.is_valid():
-        usuario = form.save()
-        login(request, usuario, backend="django.contrib.auth.backends.ModelBackend")
-        messages.success(request, f"Bem-vindo(a), {usuario.nome.split()[0]}! Sua conta foi criada.")
-        return redirect(destino_seguro(request, "/"))
+        try:
+            with transaction.atomic():
+                usuario = form.save()
+        except IntegrityError:
+            # Corrida (ex.: duplo toque no botão): a checagem do form passou nas duas
+            # requisições e o UNIQUE do banco barrou a segunda (defeito D6).
+            form.add_error("email", "Já existe uma conta com este e-mail. Tente entrar.")
+        else:
+            login(request, usuario, backend="django.contrib.auth.backends.ModelBackend")
+            messages.success(request, f"Bem-vindo(a), {usuario.nome.split()[0]}! Sua conta foi criada.")
+            return redirect(destino_seguro(request, "/"))
     return render(request, "contas/cadastro.html", {"form": form})
 
 
