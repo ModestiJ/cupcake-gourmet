@@ -1,0 +1,15 @@
+{% load static loja %}
+<article class="cartao produto">
+  <a href="{% url 'catalogo:detalhe' p.pk %}" style="color:inherit;text-decoration:none">
+    <img src="{% static p.imagem %}" alt="Cupcake {{ p.nome }}" loading="lazy" width="200" height="200">
+    <h3>{{ p.nome }}</h3>
+  </a>
+  <span class="muted" style="font-size:.8rem">{{ p.categoria.nome }}{% if p.estoque <= 5 %} · <strong style="color:var(--ambar)">últimas {{ p.estoque }}</strong>{% endif %}</span>
+  <div class="rodape">
+    <span class="preco">{{ p.preco|brl }}</span>
+    <form method="post" action="{% url 'pedidos:carrinho_adicionar' p.pk %}">{% csrf_token %}
+      <input type="hidden" name="next" value="{{ request.get_full_path }}">
+      <button class="btn btn-primario btn-pequeno" type="submit" aria-label="Adicionar {{ p.nome }} ao carrinho">+ 🛒</button>
+    </form>
+  </div>
+</article>

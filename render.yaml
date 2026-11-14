@@ -1,0 +1,24 @@
+# Blueprint do Render (Infraestrutura como código).
+# O banco é o Postgres gratuito do Neon: cole a connection string em DATABASE_URL no painel.
+services:
+  - type: web
+    name: cupcake-gourmet
+    runtime: python
+    plan: free
+    region: virginia
+    buildCommand: ./build.sh
+    startCommand: gunicorn config.wsgi:application --workers 2 --timeout 60
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.14.2
+      - key: DEBUG
+        value: "0"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false

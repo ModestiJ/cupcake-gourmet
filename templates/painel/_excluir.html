@@ -1,0 +1,3 @@
+<form method="post" action="{% url 'painel:excluir' tipo o.pk %}" data-confirmar="Excluir “{{ o }}”? Se houver vínculos, o registro será apenas desativado.">{% csrf_token %}
+  <button class="btn btn-perigo btn-pequeno" type="submit" aria-label="Excluir {{ o }}">Excluir</button>
+</form>

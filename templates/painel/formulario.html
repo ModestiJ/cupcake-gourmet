@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block titulo %}{% if obj %}Editar{% else %}Novo(a){% endif %} {{ nome }}{% endblock %}
+{% block conteudo %}
+{% include "painel/_menu.html" %}
+<div class="form-estreito">
+  <h1>{% if obj %}Editar {{ nome }}{% else %}Novo(a) {{ nome }}{% endif %}</h1>
+  <form method="post" class="cartao" novalidate>{% csrf_token %}
+    {% include "_campos.html" %}
+    <div class="linha">
+      <button class="btn btn-primario" type="submit">Salvar</button>
+      <a class="btn btn-secundario" href="{% url 'painel:lista' tipo %}">Cancelar</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

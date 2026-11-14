@@ -1,0 +1,25 @@
+[project]
+name = "cupcake-gourmet"
+version = "1.0.0"
+description = "PIT II – Loja de cupcakes gourmet (Django MVC)"
+requires-python = ">=3.12"
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings"
+python_files = ["test_*.py"]
+testpaths = ["tests"]
+addopts = "-q --strict-markers"
+filterwarnings = ["ignore:No directory at:UserWarning"]
+markers = [
+    "unitario: regras de negócio isoladas (services, carrinho, gateway)",
+    "integracao: controllers + banco + templates via cliente HTTP",
+    "aceitacao: cenários Gherkin das histórias de usuário (PIT I)",
+]
+
+[tool.coverage.run]
+source = ["contas", "catalogo", "pedidos", "painel"]
+omit = ["*/migrations/*", "*/admin.py", "*/management/*"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true

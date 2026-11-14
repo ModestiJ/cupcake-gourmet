@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block titulo %}{{ titulo }}{% endblock %}
+{% block conteudo %}
+<div class="vazio">
+  <div class="emoji">🧁</div>
+  <h1>{{ titulo }}</h1>
+  <p class="muted">{{ mensagem }}</p>
+  <p class="muted">Código {{ codigo }}</p>
+  <a class="btn btn-primario" href="{% url 'catalogo:vitrine' %}">Voltar à vitrine</a>
+</div>
+{% endblock %}

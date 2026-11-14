@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block titulo %}Minha conta{% endblock %}
+{% block conteudo %}
+<div class="linha entre"><h1>Minha conta</h1>
+  <form method="post" action="{% url 'contas:sair' %}">{% csrf_token %}<button class="btn btn-secundario btn-pequeno" type="submit">Sair</button></form>
+</div>
+<div class="duas-colunas">
+  <section class="cartao">
+    <div class="linha entre"><h2>Endereços de entrega</h2><a class="btn btn-secundario btn-pequeno" href="{% url 'contas:endereco_novo' %}">+ Novo</a></div>
+    {% for e in enderecos %}
+      <div class="linha entre" style="padding:10px 0;border-bottom:1px solid var(--borda)">
+        <div><strong>{{ e.apelido }}</strong> {% if e.principal %}<span class="selo selo-menta">principal</span>{% endif %}<br><span class="muted">{{ e }} · {{ e.cep }}</span></div>
+        <div class="linha">
+          <a class="btn btn-secundario btn-pequeno" href="{% url 'contas:endereco_editar' e.pk %}">Editar</a>
+          <form method="post" action="{% url 'contas:endereco_excluir' e.pk %}" data-confirmar="Remover o endereço “{{ e.apelido }}”?">{% csrf_token %}<button class="btn btn-perigo btn-pequeno" type="submit">Remover</button></form>
+        </div>
+      </div>
+    {% empty %}
+      <p class="muted">Nenhum endereço cadastrado. Cadastre um para receber em casa.</p>
+    {% endfor %}
+  </section>
+  <aside class="cartao">
+    <h2>Dados pessoais</h2>
+    <p class="muted">{{ user.email }}</p>
+    <form method="post" novalidate>{% csrf_token %}
+      {% include "_campos.html" %}
+      <button class="btn btn-primario btn-bloco" type="submit">Salvar</button>
+    </form>
+  </aside>
+</div>
+{% endblock %}

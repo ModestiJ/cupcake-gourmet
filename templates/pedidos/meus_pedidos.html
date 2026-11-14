@@ -1,0 +1,16 @@
+{% extends "base.html" %}{% load loja %}
+{% block titulo %}Meus pedidos{% endblock %}
+{% block conteudo %}
+<h1>Meus pedidos</h1>
+<div class="pilha">
+{% for p in pedidos %}
+  <a class="cartao pedido-card" href="{% url 'pedidos:detalhe' p.pk %}" style="color:inherit;text-decoration:none">
+    <header><strong>Pedido {{ p.codigo }}</strong><span class="selo {{ p.status|cor_status }}">{{ p.get_status_display }}</span></header>
+    <span class="muted">{{ p.criado_em|date:"d/m/Y H:i" }} · {{ p.itens.all|length }} item(ns) · {{ p.get_tipo_entrega_display }}</span>
+    <div class="linha entre"><span class="muted">Pagamento: {{ p.pagamento.get_status_display }}</span><strong>{{ p.total|brl }}</strong></div>
+  </a>
+{% empty %}
+  <div class="vazio cartao"><div class="emoji">📦</div><p><strong>Você ainda não fez pedidos.</strong></p><a class="btn btn-primario" href="{% url 'catalogo:vitrine' %}">Ver cupcakes</a></div>
+{% endfor %}
+</div>
+{% endblock %}

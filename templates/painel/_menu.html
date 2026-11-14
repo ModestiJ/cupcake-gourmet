@@ -1,0 +1,8 @@
+{% with url=request.resolver_match %}
+<nav class="chips" aria-label="Painel">
+  <a class="chip" href="{% url 'painel:inicio' %}" aria-current="{% if url.url_name == 'inicio' or url.url_name == 'pedido_detalhe' %}true{% else %}false{% endif %}">📋 Pedidos</a>
+  <a class="chip" href="{% url 'painel:lista' 'produtos' %}" aria-current="{% if url.kwargs.tipo == 'produtos' %}true{% else %}false{% endif %}">🧁 Cupcakes</a>
+  <a class="chip" href="{% url 'painel:lista' 'categorias' %}" aria-current="{% if url.kwargs.tipo == 'categorias' %}true{% else %}false{% endif %}">🏷️ Categorias</a>
+  <a class="chip" href="{% url 'painel:lista' 'zonas' %}" aria-current="{% if url.kwargs.tipo == 'zonas' %}true{% else %}false{% endif %}">🛵 Zonas de entrega</a>
+</nav>
+{% endwith %}

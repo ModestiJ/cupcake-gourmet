@@ -1,0 +1,39 @@
+{% extends "base.html" %}{% load static loja %}
+{% block titulo %}{{ produto.nome }}{% endblock %}
+{% block conteudo %}
+<p><a href="{% url 'catalogo:vitrine' %}?categoria={{ produto.categoria.slug }}">← {{ produto.categoria.nome }}</a></p>
+<div class="detalhe">
+  <img src="{% static produto.imagem %}" alt="Cupcake {{ produto.nome }}" width="400" height="400">
+  <div class="pilha">
+    <div>
+      {% if produto.destaque %}<span class="selo">⭐ Destaque</span>{% endif %}
+      <h1 style="margin-top:6px">{{ produto.nome }}</h1>
+      <div class="preco-grande">{{ produto.preco|brl }}</div>
+    </div>
+    <p>{{ produto.descricao }}</p>
+    {% if produto.ingredientes %}<p class="muted"><strong>Ingredientes:</strong> {{ produto.ingredientes }}</p>{% endif %}
+
+    {% if produto.disponivel %}
+      <form method="post" action="{% url 'pedidos:carrinho_adicionar' produto.pk %}" class="pilha cartao">{% csrf_token %}
+        <div class="linha entre">
+          <label for="quantidade" style="margin:0">Quantidade</label>
+          <div class="qtd" data-qtd>
+            <button type="button" data-passo="-1" aria-label="Diminuir">−</button>
+            <input id="quantidade" type="number" name="quantidade" value="1" min="1" max="{{ produto.estoque }}" inputmode="numeric">
+            <button type="button" data-passo="1" aria-label="Aumentar">+</button>
+          </div>
+        </div>
+        <span class="muted">{{ produto.estoque }} disponível(is) hoje</span>
+        <button class="btn btn-primario btn-bloco" type="submit">Adicionar ao carrinho</button>
+      </form>
+    {% else %}
+      <div class="msg msg-warning"><span>Esgotado por hoje. Volte amanhã! 🧁</span></div>
+    {% endif %}
+  </div>
+</div>
+
+{% if relacionados %}
+<h2 style="margin-top:32px">Você também pode gostar</h2>
+<div class="grade">{% for p in relacionados %}{% include "catalogo/_card.html" %}{% endfor %}</div>
+{% endif %}
+{% endblock %}

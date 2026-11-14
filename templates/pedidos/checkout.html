@@ -1,0 +1,60 @@
+{% extends "base.html" %}{% load loja %}
+{% block titulo %}Finalizar pedido{% endblock %}
+{% block conteudo %}
+<h1>Finalizar pedido</h1>
+<form method="post" id="form-checkout" data-subtotal="{{ subtotal|stringformat:'.2f' }}" class="duas-colunas">{% csrf_token %}
+  <div class="pilha">
+    <fieldset class="cartao" style="border:1px solid var(--borda)">
+      <legend><h2 style="margin:0">1. Como quer receber?</h2></legend>
+      <div class="opcoes">
+        <label class="opcao"><input type="radio" name="tipo_entrega" value="ENTREGA" {% if post.tipo_entrega == 'ENTREGA' or not post %}checked{% endif %}> Entrega <small>&nbsp;– taxa por bairro</small></label>
+        <label class="opcao"><input type="radio" name="tipo_entrega" value="RETIRADA" {% if post.tipo_entrega == 'RETIRADA' %}checked{% endif %}> Retirar na loja <small>&nbsp;– sem taxa</small></label>
+      </div>
+    </fieldset>
+
+    <fieldset class="cartao" id="bloco-endereco" style="border:1px solid var(--borda)">
+      <legend><h2 style="margin:0">2. Endereço</h2></legend>
+      <div class="opcoes">
+        {% for e in enderecos %}
+          <label class="opcao {% if e.taxa is None %}desabilitada{% endif %}">
+            <input type="radio" name="endereco" value="{{ e.pk }}" data-taxa="{% if e.taxa is not None %}{{ e.taxa|stringformat:'.2f' }}{% endif %}"
+              {% if e.taxa is None %}disabled{% elif post.endereco == e.pk|stringformat:'d' or not post and e.principal %}checked{% endif %}>
+            <span>{{ e.apelido }} <small>{{ e }}</small>
+              <small>{% if e.taxa is None %}⚠️ Ainda não entregamos neste bairro{% else %}Taxa: {{ e.taxa|brl }}{% endif %}</small></span>
+          </label>
+        {% empty %}
+          <p class="muted">Você ainda não tem endereço cadastrado.</p>
+        {% endfor %}
+      </div>
+      <p style="margin:12px 0 0"><a class="btn btn-secundario btn-pequeno" href="{% url 'contas:endereco_novo' %}?next={% url 'pedidos:checkout' %}">+ Adicionar endereço</a></p>
+    </fieldset>
+
+    <fieldset class="cartao" style="border:1px solid var(--borda)">
+      <legend><h2 style="margin:0">3. Pagamento</h2></legend>
+      <div class="opcoes">
+        {% for valor, rotulo in metodos %}
+          <label class="opcao"><input type="radio" name="metodo_pagamento" value="{{ valor }}" {% if post.metodo_pagamento == valor or not post and forloop.first %}checked{% endif %}> {{ rotulo }}</label>
+        {% endfor %}
+      </div>
+      <p class="muted" style="margin:8px 0 0">Ambiente de demonstração: o pagamento online é simulado.</p>
+    </fieldset>
+
+    <div class="cartao">
+      <label for="observacao">Observação <span class="muted">(opcional)</span></label>
+      <textarea id="observacao" name="observacao" rows="2" maxlength="300" placeholder="Ex.: é para presente, tocar o interfone 12">{{ post.observacao }}</textarea>
+    </div>
+  </div>
+
+  <aside class="cartao pilha">
+    <h2>Resumo</h2>
+    {% for l in linhas %}<div class="linha entre"><span>{{ l.quantidade }}× {{ l.produto.nome }}</span><span>{{ l.total|brl }}</span></div>{% endfor %}
+    <div class="resumo">
+      <div><span>Subtotal</span><span>{{ subtotal|brl }}</span></div>
+      <div><span>Entrega</span><span id="valor-taxa">—</span></div>
+      <div class="total"><span>Total</span><span id="valor-total">{{ subtotal|brl }}</span></div>
+    </div>
+    <button class="btn btn-primario btn-bloco" id="btn-finalizar" type="submit">Confirmar pedido</button>
+    <a href="{% url 'pedidos:carrinho' %}" class="muted" style="text-align:center">Voltar ao carrinho</a>
+  </aside>
+</form>
+{% endblock %}

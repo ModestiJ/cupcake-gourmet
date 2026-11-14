@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block titulo %}{% if endereco %}Editar endereço{% else %}Novo endereço{% endif %}{% endblock %}
+{% block conteudo %}
+<div class="form-estreito">
+  <h1>{% if endereco %}Editar endereço{% else %}Novo endereço{% endif %}</h1>
+  <p class="muted">Confira os <a href="{% url 'pedidos:areas_entrega' %}" target="_blank">bairros atendidos</a>.</p>
+  <form method="post" class="cartao" novalidate>{% csrf_token %}
+    {% include "_campos.html" %}
+    <div class="linha">
+      <button class="btn btn-primario" type="submit">Salvar</button>
+      <a class="btn btn-secundario" href="{{ voltar }}">Cancelar</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

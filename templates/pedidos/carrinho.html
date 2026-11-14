@@ -1,0 +1,47 @@
+{% extends "base.html" %}{% load static loja %}
+{% block titulo %}Carrinho{% endblock %}
+{% block conteudo %}
+<h1>Seu carrinho</h1>
+{% if linhas %}
+<div class="duas-colunas">
+  <section class="cartao">
+    {% for l in linhas %}
+    <div class="linha-item">
+      <img src="{% static l.produto.imagem %}" alt="">
+      <div><strong>{{ l.produto.nome }}</strong><br><span class="muted">{{ l.produto.preco|brl }} cada</span></div>
+      <div class="acoes">
+        <form method="post" action="{% url 'pedidos:carrinho_atualizar' l.produto.pk %}">{% csrf_token %}
+          <div class="qtd" data-qtd data-autoenvio>
+            <button type="button" data-passo="-1" aria-label="Diminuir {{ l.produto.nome }}">−</button>
+            <input type="number" name="quantidade" value="{{ l.quantidade }}" min="0" max="{{ l.produto.estoque }}" aria-label="Quantidade de {{ l.produto.nome }}" onchange="this.form.submit()">
+            <button type="button" data-passo="1" aria-label="Aumentar {{ l.produto.nome }}">+</button>
+          </div>
+          <noscript><button class="btn btn-secundario btn-pequeno" type="submit">Atualizar</button></noscript>
+        </form>
+        <strong>{{ l.total|brl }}</strong>
+        <form method="post" action="{% url 'pedidos:carrinho_remover' l.produto.pk %}">{% csrf_token %}
+          <button class="btn btn-perigo btn-pequeno" type="submit" aria-label="Remover {{ l.produto.nome }}">Remover</button>
+        </form>
+      </div>
+    </div>
+    {% endfor %}
+    <p><a href="{% url 'catalogo:vitrine' %}">← Continuar comprando</a></p>
+  </section>
+  <aside class="cartao pilha">
+    <h2>Resumo</h2>
+    <div class="resumo">
+      <div><span>Subtotal</span><strong>{{ subtotal|brl }}</strong></div>
+      <div class="muted"><span>Entrega</span><span>calculada no próximo passo</span></div>
+    </div>
+    <a class="btn btn-primario btn-bloco" href="{% url 'pedidos:checkout' %}">Finalizar pedido</a>
+    {% if not user.is_authenticated %}<p class="muted" style="margin:0">Você vai entrar ou criar sua conta no próximo passo.</p>{% endif %}
+  </aside>
+</div>
+{% else %}
+<div class="vazio cartao">
+  <div class="emoji">🛒</div>
+  <p><strong>Seu carrinho está vazio.</strong></p>
+  <a class="btn btn-primario" href="{% url 'catalogo:vitrine' %}">Ver cupcakes</a>
+</div>
+{% endif %}
+{% endblock %}

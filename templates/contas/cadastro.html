@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block titulo %}Criar conta{% endblock %}
+{% block conteudo %}
+<div class="form-estreito">
+  <h1>Criar conta</h1>
+  <p class="muted">Leva menos de um minuto. Usamos seus dados só para processar seus pedidos.</p>
+  <form method="post" class="cartao" novalidate>{% csrf_token %}
+    {% include "_campos.html" %}
+    <p class="muted" style="font-size:.82rem">A senha precisa ter pelo menos 8 caracteres e não pode ser só números.</p>
+    <button class="btn btn-primario btn-bloco" type="submit">Criar conta</button>
+  </form>
+  <p class="muted" style="text-align:center">Já tem conta? <a href="{% url 'contas:entrar' %}">Entrar</a></p>
+</div>
+{% endblock %}

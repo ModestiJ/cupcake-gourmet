@@ -1,0 +1,40 @@
+{% extends "base.html" %}{% load loja %}
+{% block titulo %}Pedido {{ pedido.codigo }}{% endblock %}
+{% block conteudo %}
+{% include "painel/_menu.html" %}
+<div class="linha entre"><h1>Pedido {{ pedido.codigo }}</h1><span class="selo {{ pedido.status|cor_status }}">{{ pedido.get_status_display }}</span></div>
+<div class="duas-colunas">
+  <div class="pilha">
+    <section class="cartao">
+      <h2>Cliente</h2>
+      <p style="margin:0">{{ pedido.usuario.nome }} · {{ pedido.usuario.email }}{% if pedido.usuario.telefone %} · {{ pedido.usuario.telefone }}{% endif %}</p>
+      <p class="muted">{{ pedido.get_tipo_entrega_display }}{% if pedido.endereco_entrega %}: {{ pedido.endereco_entrega }}{% endif %}</p>
+      {% if pedido.observacao %}<p><strong>Obs.:</strong> {{ pedido.observacao }}</p>{% endif %}
+    </section>
+    <section class="cartao">
+      <h2>Itens</h2>
+      {% for i in itens %}<div class="linha entre" style="padding:6px 0"><span>{{ i.quantidade }}× {{ i.nome_produto }} <span class="muted">({{ i.preco_unitario|brl }})</span></span><span>{{ i.total|brl }}</span></div>{% endfor %}
+      <div class="resumo"><div><span>Taxa de entrega</span><span>{{ pedido.taxa_entrega|brl }}</span></div><div class="total"><span>Total</span><span>{{ pedido.total|brl }}</span></div></div>
+    </section>
+  </div>
+  <aside class="pilha">
+    <section class="cartao">
+      <h2>Pagamento</h2>
+      <p style="margin:0">{{ pedido.pagamento.get_metodo_display }} · <span class="selo {{ pedido.pagamento.status|cor_status }}">{{ pedido.pagamento.get_status_display }}</span></p>
+      {% if pedido.pagamento.transacao_ref %}<p class="muted" style="margin:4px 0 0">Ref.: {{ pedido.pagamento.transacao_ref }}</p>{% endif %}
+    </section>
+    <section class="cartao"><h2>Linha do tempo</h2>{% include "pedidos/_timeline.html" %}</section>
+    {% if proximo_rotulo %}
+      <form method="post" action="{% url 'painel:pedido_avancar' pedido.pk %}">{% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.path }}">
+        <button class="btn btn-primario btn-bloco" type="submit">Avançar para: {{ proximo_rotulo }}</button>
+      </form>
+    {% endif %}
+    {% if not pedido.finalizado %}
+      <form method="post" action="{% url 'painel:pedido_cancelar' pedido.pk %}" data-confirmar="Cancelar o pedido {{ pedido.codigo }}? O estoque será devolvido e pagamentos aprovados, estornados.">{% csrf_token %}
+        <button class="btn btn-perigo btn-bloco" type="submit">Cancelar pedido</button>
+      </form>
+    {% endif %}
+  </aside>
+</div>
+{% endblock %}

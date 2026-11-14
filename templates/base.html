@@ -1,0 +1,59 @@
+{% load static %}<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#3b2418">
+  <meta name="description" content="Cupcake Gourmet – vitrine, pedidos e entrega de cupcakes artesanais.">
+  <title>{% block titulo %}Cupcake Gourmet{% endblock %} · Cupcake Gourmet</title>
+  <link rel="icon" href="{% static 'img/icone.svg' %}" type="image/svg+xml">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+</head>
+<body>
+  {% with url=request.resolver_match.view_name %}
+  <header class="topo">
+    <div class="container">
+      <a class="marca" href="{% url 'catalogo:vitrine' %}"><img src="{% static 'img/icone.svg' %}" alt="">Cupcake Gourmet</a>
+      <nav class="nav" aria-label="Principal">
+        <a class="esconder-mobile" href="{% url 'catalogo:vitrine' %}" {% if url == 'catalogo:vitrine' %}aria-current="page"{% endif %}>Vitrine</a>
+        {% if user.is_authenticated %}
+          {% if user.is_admin_loja %}<a href="{% url 'painel:inicio' %}" {% if 'painel' in url %}aria-current="page"{% endif %}>Painel</a>{% endif %}
+          <a class="esconder-mobile" href="{% url 'pedidos:meus_pedidos' %}" {% if url == 'pedidos:meus_pedidos' %}aria-current="page"{% endif %}>Meus pedidos</a>
+          <a class="esconder-mobile" href="{% url 'contas:perfil' %}">Olá, {{ user.nome|truncatechars:16 }}</a>
+          <form method="post" action="{% url 'contas:sair' %}" class="esconder-mobile" style="display:inline">{% csrf_token %}<button type="submit">Sair</button></form>
+        {% else %}
+          <a href="{% url 'contas:entrar' %}">Entrar</a>
+        {% endif %}
+        <a href="{% url 'pedidos:carrinho' %}" aria-label="Carrinho com {{ carrinho_qtd }} itens">🛒{% if carrinho_qtd %}<span class="badge">{{ carrinho_qtd }}</span>{% endif %}</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" id="conteudo">
+    {% if messages %}
+      <ul class="mensagens" role="status" aria-live="polite">
+        {% for m in messages %}<li class="msg msg-{{ m.tags }}"><span>{{ m }}</span><button type="button" aria-label="Fechar">×</button></li>{% endfor %}
+      </ul>
+    {% endif %}
+    {% block conteudo %}{% endblock %}
+  </main>
+
+  <footer class="rodape-site">
+    Cupcake Gourmet · Projeto Integrador Transdisciplinar em Engenharia de Software II ·
+    <a href="{% url 'pedidos:areas_entrega' %}">Áreas de entrega</a> · <a href="{% url 'catalogo:sobre' %}">Sobre</a>
+  </footer>
+
+  <nav class="barra-inferior" aria-label="Navegação rápida">
+    <a href="{% url 'catalogo:vitrine' %}" {% if url == 'catalogo:vitrine' %}aria-current="page"{% endif %}><span>🧁</span>Vitrine</a>
+    <a href="{% url 'pedidos:carrinho' %}" {% if url == 'pedidos:carrinho' %}aria-current="page"{% endif %}><span>🛒</span>Carrinho{% if carrinho_qtd %} ({{ carrinho_qtd }}){% endif %}</a>
+    <a href="{% url 'pedidos:meus_pedidos' %}" {% if url == 'pedidos:meus_pedidos' %}aria-current="page"{% endif %}><span>📦</span>Pedidos</a>
+    <a href="{% if user.is_authenticated %}{% url 'contas:perfil' %}{% else %}{% url 'contas:entrar' %}{% endif %}" {% if url == 'contas:perfil' %}aria-current="page"{% endif %}><span>👤</span>{% if user.is_authenticated %}Conta{% else %}Entrar{% endif %}</a>
+  </nav>
+  {% endwith %}
+  <script src="{% static 'js/app.js' %}" defer></script>
+</body>
+</html>

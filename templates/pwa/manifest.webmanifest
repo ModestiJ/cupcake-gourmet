@@ -1,0 +1,10 @@
+{% load static %}{
+  "name": "Cupcake Gourmet",
+  "short_name": "Cupcakes",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fff7f0",
+  "theme_color": "#3b2418",
+  "lang": "pt-BR",
+  "icons": [{"src": "{% static 'img/icone.svg' %}", "sizes": "any", "type": "image/svg+xml", "purpose": "any"}]
+}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}{% load loja %}
+{% block titulo %}Painel{% endblock %}
+{% block conteudo %}
+<h1>Painel da loja</h1>
+{% include "painel/_menu.html" %}
+
+<section class="kpis" aria-label="Resumo do dia">
+  <div class="cartao kpi"><div class="valor">{{ resumo.pedidos }}</div><div class="rotulo">Pedidos hoje</div></div>
+  <div class="cartao kpi"><div class="valor">{{ resumo.faturamento|brl }}</div><div class="rotulo">Vendido hoje</div></div>
+  <div class="cartao kpi"><div class="valor">{{ resumo.ticket_medio|brl }}</div><div class="rotulo">Ticket médio</div></div>
+  <div class="cartao kpi"><div class="valor">{{ resumo.em_aberto }}</div><div class="rotulo">Em aberto</div></div>
+</section>
+
+{% if baixo_estoque %}
+<div class="msg msg-warning" style="margin-bottom:16px"><span>⚠️ Estoque baixo:
+  {% for p in baixo_estoque %}<a href="{% url 'painel:editar' 'produtos' p.pk %}">{{ p.nome }} ({{ p.estoque }})</a>{% if not forloop.last %}, {% endif %}{% endfor %}</span></div>
+{% endif %}
+
+<div class="linha entre"><h2>Fila de pedidos</h2>
+  <form method="get"><label for="f" class="sr-only">Filtrar</label>
+    <select id="f" name="status" onchange="this.form.submit()" style="min-height:36px;padding:4px 8px">
+      <option value="abertos" {% if filtro == 'abertos' %}selected{% endif %}>Em aberto</option>
+      <option value="todos" {% if filtro == 'todos' %}selected{% endif %}>Todos</option>
+      {% for v, r in status_choices %}<option value="{{ v }}" {% if filtro == v %}selected{% endif %}>{{ r }}</option>{% endfor %}
+    </select>
+  </form>
+</div>
+
+<div class="grade" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr))">
+{% for p in pedidos %}
+  <article class="cartao pedido-card">
+    <header><a href="{% url 'painel:pedido_detalhe' p.pk %}"><strong>{{ p.codigo }}</strong></a><span class="selo {{ p.status|cor_status }}">{{ p.get_status_display }}</span></header>
+    <span>{{ p.usuario.nome }} · {{ p.criado_em|date:"d/m H:i" }}</span>
+    <span class="muted">{% for i in p.itens.all %}{{ i.quantidade }}× {{ i.nome_produto }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>
+    <span class="muted">{{ p.get_tipo_entrega_display }}{% if p.bairro %} – {{ p.bairro }}{% endif %} · {{ p.pagamento.get_metodo_display }}: <span class="selo {{ p.pagamento.status|cor_status }}">{{ p.pagamento.get_status_display }}</span></span>
+    <div class="linha entre"><strong>{{ p.total|brl }}</strong>
+      {% if p.proximo %}
+      <form method="post" action="{% url 'painel:pedido_avancar' p.pk %}">{% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+        <button class="btn btn-primario btn-pequeno" type="submit">→ {{ p.proximo_rotulo }}</button>
+      </form>
+      {% endif %}
+    </div>
+  </article>
+{% empty %}
+  <div class="vazio cartao" style="grid-column:1/-1"><div class="emoji">✅</div><p>Nenhum pedido nesta lista.</p></div>
+{% endfor %}
+</div>
+{% endblock %}

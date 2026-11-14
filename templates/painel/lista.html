@@ -1,0 +1,36 @@
+{% extends "base.html" %}{% load loja static %}
+{% block titulo %}{{ titulo }}{% endblock %}
+{% block conteudo %}
+<h1>{{ titulo }}</h1>
+{% include "painel/_menu.html" %}
+<p><a class="btn btn-primario" href="{% url 'painel:novo' tipo %}">+ Novo</a></p>
+<div class="rolavel">
+<table class="tabela">
+  {% if tipo == 'produtos' %}
+    <thead><tr><th></th><th>Nome</th><th>Categoria</th><th>Preço</th><th>Estoque</th><th>Situação</th><th></th></tr></thead>
+    <tbody>{% for o in objetos %}<tr>
+      <td><img src="{% static o.imagem %}" alt="" width="40" height="40" style="border-radius:8px"></td>
+      <td><a href="{% url 'painel:editar' tipo o.pk %}">{{ o.nome }}</a>{% if o.destaque %} ⭐{% endif %}</td>
+      <td>{{ o.categoria }}</td><td>{{ o.preco|brl }}</td>
+      <td>{% if o.estoque <= 5 %}<span class="selo selo-ambar">{{ o.estoque }}</span>{% else %}{{ o.estoque }}{% endif %}</td>
+      <td>{% if o.ativo %}<span class="selo selo-menta">ativo</span>{% else %}<span class="selo selo-neutro">inativo</span>{% endif %}</td>
+      <td>{% include "painel/_excluir.html" %}</td>
+    </tr>{% empty %}<tr><td colspan="7">Nenhum cupcake cadastrado.</td></tr>{% endfor %}</tbody>
+  {% elif tipo == 'categorias' %}
+    <thead><tr><th>Nome</th><th>Ordem</th><th>Situação</th><th></th></tr></thead>
+    <tbody>{% for o in objetos %}<tr>
+      <td><a href="{% url 'painel:editar' tipo o.pk %}">{{ o.nome }}</a></td><td>{{ o.ordem }}</td>
+      <td>{% if o.ativa %}<span class="selo selo-menta">ativa</span>{% else %}<span class="selo selo-neutro">inativa</span>{% endif %}</td>
+      <td>{% include "painel/_excluir.html" %}</td>
+    </tr>{% empty %}<tr><td colspan="4">Nenhuma categoria.</td></tr>{% endfor %}</tbody>
+  {% else %}
+    <thead><tr><th>Bairro</th><th>Taxa</th><th>Situação</th><th></th></tr></thead>
+    <tbody>{% for o in objetos %}<tr>
+      <td><a href="{% url 'painel:editar' tipo o.pk %}">{{ o.bairro }}</a></td><td>{{ o.taxa|brl }}</td>
+      <td>{% if o.ativa %}<span class="selo selo-menta">ativa</span>{% else %}<span class="selo selo-neutro">inativa</span>{% endif %}</td>
+      <td>{% include "painel/_excluir.html" %}</td>
+    </tr>{% empty %}<tr><td colspan="4">Nenhuma zona.</td></tr>{% endfor %}</tbody>
+  {% endif %}
+</table>
+</div>
+{% endblock %}

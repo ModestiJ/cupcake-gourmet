@@ -1,0 +1,28 @@
+{% extends "base.html" %}{% load loja %}
+{% block titulo %}Pagamento {{ pedido.codigo }}{% endblock %}
+{% block conteudo %}
+<div class="form-estreito pilha">
+  <h1>Pagamento do pedido {{ pedido.codigo }}</h1>
+  {% if pag.status == 'RECUSADO' %}<div class="msg msg-error"><span>A última tentativa foi recusada. Tente novamente.</span></div>{% endif %}
+  <div class="cartao pilha" style="text-align:center">
+    <div class="muted">Total a pagar</div>
+    <div class="preco-grande">{{ pag.valor|brl }}</div>
+    {% if pag.metodo == 'PIX' %}
+      <div class="qr" role="img" aria-label="QR Code Pix ilustrativo"></div>
+      <p class="muted" style="margin:0">Pix copia e cola (simulado):</p>
+      <div class="pix" id="codigo-pix">{{ codigo_pix }}</div>
+      <button type="button" class="btn btn-secundario" id="copiar-pix">Copiar código</button>
+    {% else %}
+      <p>💳 Pagamento com cartão em ambiente de demonstração.<br><span class="muted">Nenhum dado de cartão é solicitado ou armazenado.</span></p>
+    {% endif %}
+    <form method="post">{% csrf_token %}
+      <button class="btn btn-sucesso btn-bloco" type="submit">{% if pag.metodo == 'PIX' %}Já paguei – confirmar (simulação){% else %}Pagar {{ pag.valor|brl }} (simulação){% endif %}</button>
+    </form>
+    <form method="post">{% csrf_token %}
+      <input type="hidden" name="simular" value="recusa">
+      <button class="btn btn-secundario btn-bloco btn-pequeno" type="submit">Simular pagamento recusado (teste)</button>
+    </form>
+  </div>
+  <a href="{% url 'pedidos:detalhe' pedido.pk %}" class="muted" style="text-align:center">Pagar depois e ver o pedido</a>
+</div>
+{% endblock %}

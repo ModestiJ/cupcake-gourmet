@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block titulo %}Vitrine{% endblock %}
+{% block conteudo %}
+{% if destaques %}
+<section class="hero">
+  <h1>Cupcakes artesanais, feitos hoje 🧁</h1>
+  <p class="muted" style="margin:0">Escolha seus sabores, receba em casa ou retire na loja.</p>
+</section>
+{% else %}
+<h1>{% if termo %}Resultados para “{{ termo }}”{% elif categoria_atual %}{{ categoria_atual.nome }}{% else %}Vitrine{% endif %}</h1>
+{% endif %}
+
+<form class="busca" method="get" role="search">
+  {% if categoria_atual %}<input type="hidden" name="categoria" value="{{ categoria_atual.slug }}">{% endif %}
+  <label for="q" class="sr-only">Buscar cupcake</label>
+  <input id="q" type="search" name="q" value="{{ termo }}" placeholder="Buscar por sabor, ex.: morango" maxlength="60">
+  <button class="btn btn-secundario" type="submit">Buscar</button>
+</form>
+
+<nav class="chips" aria-label="Categorias">
+  <a class="chip" href="{% url 'catalogo:vitrine' %}{% if termo %}?q={{ termo|urlencode }}{% endif %}" aria-current="{% if not categoria_atual %}true{% else %}false{% endif %}">Todos</a>
+  {% for c in categorias %}
+    <a class="chip" href="?categoria={{ c.slug }}{% if termo %}&q={{ termo|urlencode }}{% endif %}" aria-current="{% if categoria_atual == c %}true{% else %}false{% endif %}">{{ c.nome }}</a>
+  {% endfor %}
+</nav>
+
+{% if destaques %}
+  <h2>⭐ Destaques do dia</h2>
+  <div class="grade" style="margin-bottom:24px">{% for p in destaques %}{% include "catalogo/_card.html" %}{% endfor %}</div>
+  <h2>Todos os sabores</h2>
+{% endif %}
+
+<div class="grade">
+  {% for p in produtos %}{% include "catalogo/_card.html" %}{% empty %}
+  <div class="vazio" style="grid-column:1/-1">
+    <div class="emoji">🔍</div>
+    <p><strong>Nenhum cupcake encontrado.</strong></p>
+    <p class="muted">Tente outro sabor ou veja todas as categorias.</p>
+    <a class="btn btn-secundario" href="{% url 'catalogo:vitrine' %}">Limpar busca</a>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

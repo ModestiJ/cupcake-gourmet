@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block titulo %}Sobre{% endblock %}
+{% block conteudo %}
+<div class="cartao pilha" style="max-width:720px">
+  <h1>Sobre o projeto</h1>
+  <p>O <strong>Cupcake Gourmet</strong> é a solução desenvolvida no Projeto Integrador Transdisciplinar em Engenharia de Software II (Cruzeiro do Sul Virtual), a partir da especificação ágil produzida no PIT I.</p>
+  <p>Funcionalidades: vitrine por categoria e busca, carrinho, pedido com entrega ou retirada, taxa por bairro, pagamento simulado (Pix/cartão/na entrega), acompanhamento por linha do tempo e painel administrativo.</p>
+  <p class="muted"><strong>Atenção:</strong> os pagamentos são <em>simulados</em> e nenhum dado de cartão é coletado. Pedidos de demonstração não geram cobrança nem entrega real.</p>
+  <p class="muted">Arquitetura MVC (Django), PostgreSQL, testes automatizados com pytest.</p>
+</div>
+{% endblock %}
