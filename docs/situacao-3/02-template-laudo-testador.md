@@ -4,7 +4,7 @@ Envie aos 5 testadores o **link do app**, o **[manual de uso](../situacao-2/02-m
 
 ---
 
-**Sistema:** Cupcake Gourmet · **Versão:** 1.0 · **URL:** _______________________
+**Sistema:** Cupcake Gourmet · **Versão:** 1.0 · **URL:** https://cupcake-gourmet-2uvn.onrender.com
 
 | Campo | Resposta |
 |---|---|

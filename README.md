@@ -7,7 +7,7 @@ Projeto Integrador Transdisciplinar em Engenharia de Software **II** (Cruzeiro d
 
 | | |
 |---|---|
-| **App em produção** | _link do Render_ |
+| **App em produção** | https://cupcake-gourmet-2uvn.onrender.com (o 1º acesso pode levar ~50 s para "acordar") |
 | **Vídeo de apresentação** | _link_ |
 | **Stack** | Python 3.14 · Django 6 (MVC) · PostgreSQL · HTML/CSS/JS · pytest |
 | **Hospedagem** | Render (web) + Neon (PostgreSQL) |
@@ -48,6 +48,7 @@ Acesse http://127.0.0.1:8000. Sem `DATABASE_URL`, o projeto usa SQLite.
 coverage run -m pytest            # 83 testes: unitários, integração e aceitação
 pytest -m aceitacao               # só os cenários Gherkin das histórias
 coverage report
+python scripts/smoke_prod.py https://cupcake-gourmet-2uvn.onrender.com   # teste de sistema E2E em produção
 ```
 
 ## Arquitetura (resumo)

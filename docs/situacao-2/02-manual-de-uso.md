@@ -1,5 +1,7 @@
 # Manual de uso – Cupcake Gourmet
 
+**Acesse:** https://cupcake-gourmet-2uvn.onrender.com
+
 > **Ambiente de demonstração.** Os pagamentos são simulados e nenhum dado de cartão é pedido. Pedidos não geram cobrança nem entrega reais.
 > No plano gratuito do Render, o primeiro acesso após um tempo parado pode levar até ~50 s para "acordar" o servidor.
 

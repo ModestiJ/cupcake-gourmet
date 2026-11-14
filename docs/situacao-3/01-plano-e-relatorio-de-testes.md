@@ -69,7 +69,24 @@ Executado em 14/11/2026 (Windows 11, Python 3.14.2, Django 6.0.10, SQLite). O CI
 | D4 | Layout mobile parecia cortado nas capturas | Teste visual em 390 px | Falso positivo do navegador headless (largura mínima). Confirmado com iframe de 390 px. Sem alteração. |
 | D5 | **Avançar status e cancelar pedido quebravam no PostgreSQL** (`FOR UPDATE cannot be applied to the nullable side of an outer join`). Localmente (SQLite) passava, porque o SQLite ignora `FOR UPDATE`. | **CI em PostgreSQL** (13 testes falharam no 1º push) | `select_for_update(of=("self",))` trava só a tabela `pedido`/`produto`. Mostra por que o teste de sistema roda no mesmo SGBD de produção. |
 
-## 4. Roteiro de teste de sistema (manual)
+## 4. Teste de sistema automatizado em produção
+
+`scripts/smoke_prod.py` percorre a aplicação publicada como um usuário real (só biblioteca padrão do Python).
+
+**Execução em 14/11/2026 contra https://cupcake-gourmet-2uvn.onrender.com: 23/23 verificações OK.**
+
+| Verificação | Resultado |
+|---|---|
+| 7 páginas públicas e estáticos respondem 200 | ✅ (vitrine 1,49 s; demais ≤ 0,5 s) |
+| Vitrine com destaques; busca "pistache" filtra corretamente | ✅ |
+| HTTPS forçado (http → https), HSTS, X-Frame-Options DENY | ✅ |
+| 404 amigável | ✅ |
+| Login do cliente demo; `/painel/` responde 403 para cliente | ✅ |
+| Carrinho → checkout com taxa do bairro (Vila Mariana R$ 8,00) → Pix | ✅ |
+| Recusa simulada → nova tentativa aprovada → linha do tempo | ✅ |
+| Cancelamento → pagamento estornado → estoque devolvido | ✅ |
+
+## 5. Roteiro de teste de sistema (manual)
 
 | # | Passo | Resultado esperado | OK? |
 |---|---|---|---|
@@ -87,6 +104,6 @@ Executado em 14/11/2026 (Windows 11, Python 3.14.2, Django 6.0.10, SQLite). O CI
 | S12 | Cliente acessa `/painel/` | Página 403 amigável | |
 | S13 | Instalar o PWA (Adicionar à tela inicial) | Ícone de cupcake e abertura em tela cheia | |
 
-## 5. Validação com usuários
+## 6. Validação com usuários
 
 Veja o [template do laudo](02-template-laudo-testador.md), os [laudos preenchidos](laudos/) e o [laudo de qualidade](03-laudo-de-qualidade.md).

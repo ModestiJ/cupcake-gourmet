@@ -8,7 +8,7 @@
 |---|---|
 | Sistema | Cupcake Gourmet – vitrine, pedidos, pagamento e entrega |
 | Versão avaliada | 1.0 (commit ✏️ `________`) |
-| URL | ✏️ |
+| URL | https://cupcake-gourmet-2uvn.onrender.com |
 | Responsável | ✏️ Nome – RGM |
 | Período de testes | ✏️ __/__/2026 a __/__/2026 |
 
@@ -21,7 +21,8 @@
 | Cobertura das regras de negócio (`services.py`) | 98% | ≥ 70% | ✅ |
 | Histórias implementadas | 17/18 (US18 adiada para a v2) | Must + Should | ✅ |
 | `check --deploy` (segurança Django) | sem erros. Avisos de HSTS em subdomínio não se aplicam ao domínio do Render. | sem erros | ✅ |
-| CI em PostgreSQL (GitHub Actions) | ✏️ link do run verde | verde | |
+| CI em PostgreSQL (GitHub Actions) | 83/83 passando ([run](https://github.com/ModestiJ/cupcake-gourmet/actions/runs/43643625678)) | verde | ✅ |
+| Teste de sistema E2E em produção (`scripts/smoke_prod.py`) | 23/23 verificações | 100% | ✅ |
 
 ## 3. Resultado da validação com testadores ✏️
 
