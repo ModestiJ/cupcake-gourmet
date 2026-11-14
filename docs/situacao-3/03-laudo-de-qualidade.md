@@ -49,6 +49,7 @@
 | D1 | Teste de limite de quantidade com expectativa errada | Teste corrigido para cobrir o estoque e o limite por item |
 | D2 | *Open redirect* no parâmetro `next` | `destino_seguro()` + teste automatizado |
 | D3 | Recusa de pagamento simulada impossível de reproduzir | Botão "Simular pagamento recusado" + teste |
+| D5 | Avançar e cancelar pedido falhavam no PostgreSQL (lock em LEFT JOIN), sem aparecer no SQLite | `select_for_update(of=("self",))`. Detectado pelo CI em Postgres. |
 
 ## 6. Conclusão ✏️
 

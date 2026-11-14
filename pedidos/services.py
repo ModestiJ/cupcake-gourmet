@@ -67,7 +67,10 @@ def criar_pedido(
 
     # Trava as linhas de produto para evitar venda acima do estoque em pedidos concorrentes.
     ids = [l.produto.pk for l in linhas]
-    produtos = {p.pk: p for p in Produto.objects.select_for_update().select_related("categoria").filter(pk__in=ids)}
+    produtos = {
+        p.pk: p
+        for p in Produto.objects.select_for_update(of=("self",)).select_related("categoria").filter(pk__in=ids)
+    }
 
     pedido = Pedido.objects.create(
         usuario=usuario,
@@ -142,7 +145,8 @@ def proximo_status(pedido: Pedido) -> str | None:
 def avancar_status(pedido: Pedido, admin: Usuario) -> Pedido:
     if not admin.is_admin_loja:
         raise ErroPedido("Apenas administradores podem alterar o status.")
-    pedido = Pedido.objects.select_for_update().select_related("pagamento").get(pk=pedido.pk)
+    # of=("self",): o Postgres não trava o lado anulável do LEFT JOIN com pagamento.
+    pedido = Pedido.objects.select_for_update(of=("self",)).select_related("pagamento").get(pk=pedido.pk)
     novo = proximo_status(pedido)
     if novo is None:
         raise ErroPedido(f"O pedido já está {pedido.get_status_display().lower()}.")
@@ -161,7 +165,7 @@ def avancar_status(pedido: Pedido, admin: Usuario) -> Pedido:
 @transaction.atomic
 def cancelar_pedido(pedido: Pedido, usuario: Usuario, gateway: GatewayPagamento | None = None) -> Pedido:
     gateway = gateway or obter_gateway()
-    pedido = Pedido.objects.select_for_update().select_related("pagamento").get(pk=pedido.pk)
+    pedido = Pedido.objects.select_for_update(of=("self",)).select_related("pagamento").get(pk=pedido.pk)
     if usuario.is_admin_loja:
         if pedido.finalizado:
             raise ErroPedido("Pedido finalizado não pode ser cancelado.")

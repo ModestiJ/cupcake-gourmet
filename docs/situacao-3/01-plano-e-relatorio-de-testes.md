@@ -67,6 +67,7 @@ Executado em 14/11/2026 (Windows 11, Python 3.14.2, Django 6.0.10, SQLite). O CI
 | D2 | O parâmetro `next` aceitava URLs externas (*open redirect*) | Revisão de código (verificação) | Função `destino_seguro` com `url_has_allowed_host_and_scheme` + teste `test_open_redirect_bloqueado` |
 | D3 | Recusa de pagamento simulada (total terminando em ,13) era impossível de reproduzir com os preços reais | Revisão do manual (validação) | Botão "Simular pagamento recusado (teste)" + teste de nova tentativa |
 | D4 | Layout mobile parecia cortado nas capturas | Teste visual em 390 px | Falso positivo do navegador headless (largura mínima). Confirmado com iframe de 390 px. Sem alteração. |
+| D5 | **Avançar status e cancelar pedido quebravam no PostgreSQL** (`FOR UPDATE cannot be applied to the nullable side of an outer join`). Localmente (SQLite) passava, porque o SQLite ignora `FOR UPDATE`. | **CI em PostgreSQL** (13 testes falharam no 1º push) | `select_for_update(of=("self",))` trava só a tabela `pedido`/`produto`. Mostra por que o teste de sistema roda no mesmo SGBD de produção. |
 
 ## 4. Roteiro de teste de sistema (manual)
 
