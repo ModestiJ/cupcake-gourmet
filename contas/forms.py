@@ -58,6 +58,10 @@ class LoginForm(AuthenticationForm):
         "inactive": "Esta conta está desativada.",
     }
 
+    def clean_username(self):
+        # O cadastro grava o e-mail em minúsculas; o celular costuma capitalizar a 1ª letra.
+        return self.cleaned_data["username"].strip().lower()
+
 
 class PerfilForm(forms.ModelForm):
     class Meta:

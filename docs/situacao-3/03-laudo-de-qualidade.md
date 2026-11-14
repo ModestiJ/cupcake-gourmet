@@ -16,7 +16,7 @@
 
 | Indicador | Resultado | Meta | Situação |
 |---|---|---|---|
-| Testes automatizados | 84/84 passando | 100% | ✅ |
+| Testes automatizados | 85/85 passando | 100% | ✅ |
 | Cobertura de código | 94% | ≥ 70% (RNF06) | ✅ |
 | Cobertura das regras de negócio (`services.py`) | 98% | ≥ 70% | ✅ |
 | Histórias implementadas | 17/18 (US18 adiada para a v2) | Must + Should | ✅ |

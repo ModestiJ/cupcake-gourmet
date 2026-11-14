@@ -89,6 +89,13 @@ def test_login_com_erro_mostra_mensagem(client, cliente):
     assert "E-mail ou senha incorretos" in r.content.decode()
 
 
+def test_login_ignora_maiusculas_no_email(client, cliente):
+    """Celular capitaliza a 1ª letra do e-mail; o login não pode falhar por isso."""
+    r = client.post(reverse("contas:entrar"), {"username": "  Ana@Teste.COM ", "password": "SenhaForte@1"})
+    assert r.status_code == 302
+    assert client.session["_auth_user_id"] == str(cliente.pk)
+
+
 def test_login_admin_vai_para_painel(client, admin):
     r = client.post(reverse("contas:entrar"), {"username": "admin@teste.com", "password": "SenhaForte@1"})
     assert r.url == "/painel/"
