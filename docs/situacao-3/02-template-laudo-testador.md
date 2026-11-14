@@ -15,6 +15,7 @@ Envie aos 5 testadores o **link do app**, o **[manual de uso](../situacao-2/02-m
 
 ### 1. Funcionalidades testadas
 Marque o que você testou e o resultado (✅ funcionou · ❌ não funcionou · ➖ não testei).
+Você não precisa testar tudo. F14 e F15 exigem acesso de administrador, liberado só a quem recebeu login de admin. Sem esse acesso, marque ➖ e explique na seção 4.
 
 | # | Funcionalidade | Resultado | Observação |
 |---|---|---|---|
@@ -31,8 +32,8 @@ Marque o que você testou e o resultado (✅ funcionou · ❌ não funcionou · 
 | F11 | Simular pagamento recusado e tentar de novo | | |
 | F12 | Acompanhar o pedido (linha do tempo) | | |
 | F13 | Cancelar pedido | | |
-| F14 | (Admin) Painel: avançar status do pedido | | |
-| F15 | (Admin) Cadastrar / editar cupcake | | |
+| F14 | (Admin – opcional) Painel: avançar status do pedido | | |
+| F15 | (Admin – opcional) Cadastrar / editar cupcake | | |
 | F16 | Usar no celular / instalar como app | | |
 
 ### 2. O que testou e **funcionou**
