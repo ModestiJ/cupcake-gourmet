@@ -2,58 +2,73 @@
 
 **Acesse:** https://cupcake-gourmet-2uvn.onrender.com
 
-> **Ambiente de demonstração.** Os pagamentos são simulados e nenhum dado de cartão é pedido. Pedidos não geram cobrança nem entrega reais.
-> No plano gratuito do Render, o primeiro acesso após um tempo parado pode levar até ~50 s para "acordar" o servidor.
+> **Ambiente de demonstração.** Os pagamentos são simulados e nenhum dado de cartão é solicitado. Os pedidos não geram cobrança nem entrega reais.
+>
+> O servidor gratuito "dorme" quando fica sem uso. Se o primeiro acesso demorar, aguarde até 50 segundos.
 
 ## Contas de teste
 
 | Perfil | E-mail | Senha |
 |---|---|---|
 | Cliente | `cliente@cupcake.dev` | `Cliente@123` |
-| Administrador | informado ao tutor/testadores em privado | — |
+| Administrador | enviado em particular para quem for testar o painel | — |
 
-Você também pode criar sua própria conta em **Entrar → Cadastre-se**.
+Se preferir, crie a sua própria conta: toque em **Entrar** e depois em **Cadastre-se**.
 
-## Instalar como app no celular (opcional)
+## Onde fica cada coisa
 
-- **Android/Chrome:** menu ⋮ → **Adicionar à tela inicial**.
-- **iPhone/Safari:** botão Compartilhar → **Adicionar à Tela de Início**.
+| | No celular | No computador |
+|---|---|---|
+| Vitrine | barra inferior → 🧁 **Vitrine** | topo → **Vitrine** |
+| Carrinho | barra inferior → 🛒 **Carrinho** | topo → ícone 🛒 |
+| Meus pedidos | barra inferior → 📦 **Pedidos** | topo → **Meus pedidos** |
+| Minha conta e sair | barra inferior → 👤 **Conta** | topo → **Olá, (seu nome)** / **Sair** |
+| Bairros atendidos | rodapé → **Áreas de entrega** | rodapé → **Áreas de entrega** |
+
+## Usar como aplicativo no celular (opcional)
+
+- **Android (Chrome):** menu ⋮ → **Adicionar à tela inicial**.
+- **iPhone (Safari):** botão Compartilhar → **Adicionar à Tela de Início**.
 
 ---
 
 ## Parte A – Cliente
 
-### 1. Vitrine
-- A página inicial mostra os **Destaques do dia** e todos os sabores.
-- Toque numa **categoria** (Clássicos, Gourmet, Veganos, Sazonais) para filtrar.
+### 1. Escolher os cupcakes
+- A página inicial mostra os **Destaques do dia** e, logo abaixo, todos os sabores.
+- Toque numa **categoria** (Clássicos, Gourmet, Veganos ou Sazonais) para filtrar. Para ver tudo de novo, toque em **Todos**.
 - Use a **busca** para procurar por nome, sabor ou ingrediente (ex.: "pistache").
-- Toque no cupcake para ver descrição, ingredientes e estoque do dia.
+- Toque no cupcake para ver a descrição, os ingredientes e quantas unidades restam hoje.
 
-### 2. Carrinho
-- Toque em **+ 🛒** no card, ou escolha a quantidade no detalhe e toque em **Adicionar ao carrinho**.
-- No **Carrinho**, use − / + para mudar a quantidade (salva sozinho) ou **Remover**.
-- O número ao lado do ícone 🛒 mostra quantos itens há no carrinho.
+### 2. Montar o carrinho
+- Toque em **+ 🛒** no card do cupcake, ou escolha a quantidade na página do cupcake e toque em **Adicionar ao carrinho**.
+- No **Carrinho**, use **−** e **+** para mudar a quantidade (a alteração é salva na hora) ou toque em **Remover**.
+- O número ao lado do 🛒 mostra quantas unidades há no carrinho.
+- Não é possível pedir mais unidades do que o estoque do dia, nem mais de 50 unidades do mesmo sabor. Se tentar, aparece um aviso.
 
-### 3. Finalizar pedido
-1. Toque em **Finalizar pedido**. Se não estiver logado, entre ou crie sua conta.
-2. **Como quer receber?** Escolha *Entrega* ou *Retirar na loja* (sem taxa).
-3. **Endereço:** cada endereço mostra a taxa do bairro. Bairros não atendidos aparecem desabilitados. Use **+ Adicionar endereço** se precisar. A lista de bairros está em **Áreas de entrega**, no rodapé.
-4. **Pagamento:** Pix, Cartão (online) ou Pagar na entrega/retirada.
-5. Confira o **total** (atualizado na hora) e toque em **Confirmar pedido**.
+### 3. Finalizar o pedido
+1. No carrinho, toque em **Finalizar pedido**. Se você ainda não entrou na sua conta, o sistema pede o login (ou o cadastro) e depois volta para esta etapa.
+2. **Como quer receber?** Escolha **Entrega** ou **Retirar na loja** (sem taxa).
+3. **Endereço** (só para entrega): cada endereço mostra a taxa de entrega do bairro. Endereços em bairros que a loja ainda não atende aparecem bloqueados. Para cadastrar outro endereço, toque em **+ Adicionar endereço**.
+4. **Pagamento:** escolha **Pix**, **Cartão (online)** ou **Pagar na entrega/retirada**.
+5. Confira o **total**, que já inclui a taxa de entrega e muda conforme as suas escolhas, e toque em **Confirmar pedido**.
 
-### 4. Pagamento (simulado)
-- **Pix:** aparece um QR ilustrativo e o código "copia e cola". Toque em **Já paguei – confirmar (simulação)**.
-- **Cartão:** toque em **Pagar (simulação)**.
-- Para testar uma **recusa**, toque em **Simular pagamento recusado (teste)**. O sistema mostra a mensagem de recusa e deixa tentar de novo.
-- Também dá para **pagar depois** pelo detalhe do pedido (botão *Pagar agora*).
+### 4. Pagar (simulação)
+- **Pix:** aparecem um QR Code ilustrativo e o código "copia e cola". Toque em **Já paguei – confirmar (simulação)**.
+- **Cartão:** toque em **Pagar R$ … (simulação)**. Nenhum dado de cartão é pedido.
+- **Testar um pagamento recusado:** toque em **Simular pagamento recusado (teste)**. O sistema mostra o aviso de recusa e permite tentar de novo.
+- Também dá para **pagar depois**: abra o pedido e toque em **Pagar agora**.
+- Se você escolheu **Pagar na entrega/retirada**, não há etapa de pagamento. O pedido já vai direto para acompanhamento.
 
 ### 5. Acompanhar e cancelar
-- Em **Pedidos** (barra inferior) ficam todos os seus pedidos com status e total.
-- No detalhe, a **linha do tempo** mostra cada etapa com data e hora.
-- Enquanto o pedido estiver **Recebido**, você pode **Cancelar pedido**. Depois que a loja inicia o preparo, o cancelamento só pode ser feito pela loja.
+- Em **Pedidos** (ou **Meus pedidos**, no computador) ficam todos os seus pedidos, com a situação e o total.
+- Ao abrir um pedido, a **linha do tempo** mostra cada etapa com data e hora: Recebido → Em preparo → Saiu para entrega (ou Pronto para retirada) → Entregue.
+- Enquanto o pedido estiver **Recebido**, você pode tocar em **Cancelar pedido**. Depois que a loja começa o preparo, só a loja pode cancelar.
 
 ### 6. Minha conta
-- Em **Conta**, altere nome e telefone, e cadastre, edite ou remova endereços. Marque um como **principal** para ele vir selecionado no checkout.
+- Em **Conta** você altera o nome e o telefone, e cadastra, edita ou remove endereços.
+- Marque um endereço como **principal** para que ele já venha selecionado ao finalizar o pedido.
+- Para sair, toque em **Sair**.
 
 ---
 
@@ -62,27 +77,27 @@ Você também pode criar sua própria conta em **Entrar → Cadastre-se**.
 Ao entrar com uma conta de administrador, você vai direto para o **Painel**.
 
 ### 1. Painel de pedidos
-- **Indicadores do dia:** quantidade de pedidos, valor vendido, ticket médio e pedidos em aberto (cancelados não contam).
-- **Alerta de estoque baixo** (5 unidades ou menos), com link para editar o produto.
-- **Fila de pedidos** (os mais antigos primeiro). Cada card mostra cliente, itens, tipo de entrega e situação do pagamento.
-- O botão **→ Próxima etapa** avança o status: Recebido → Em preparo → Saiu para entrega (ou Pronto para retirada) → Entregue.
-  - Pedidos com Pix/cartão **não pagos** não podem ir para preparo.
-  - Pedidos "pagar na entrega" são marcados como pagos ao serem entregues.
-- Use o filtro para ver todos os pedidos ou um status específico.
-- No detalhe do pedido você vê os dados do cliente, a referência do pagamento e a linha do tempo, e pode **cancelar** o pedido (o estoque volta e o pagamento aprovado é estornado).
+- No topo ficam os **números do dia**: pedidos, valor vendido, ticket médio e pedidos em aberto. Pedidos cancelados não entram na conta.
+- Um **alerta de estoque baixo** aparece quando um cupcake tem 5 unidades ou menos. Toque no nome para ajustar o estoque.
+- A **fila de pedidos** mostra primeiro os pedidos mais antigos, com o cliente, os itens, o tipo de entrega e a situação do pagamento.
+- O botão de cada pedido mostra a **próxima etapa** (ex.: **→ Em preparo**, **→ Saiu para entrega**, **→ Entregue**). Toque para avançar.
+  - Pedidos com Pix ou cartão **ainda não pagos** não podem ir para preparo. O sistema avisa.
+  - Pedidos "pagar na entrega/retirada" são marcados como pagos quando você confirma a entrega.
+- Use o filtro acima da fila para ver todos os pedidos ou só os de uma situação.
+- Toque no número do pedido para ver os detalhes: dados do cliente, endereço, referência do pagamento e linha do tempo. Ali também é possível **cancelar** o pedido. O estoque volta e o pagamento aprovado é estornado.
 
 ### 2. Cupcakes, categorias e zonas de entrega
 - Use as abas 🧁 **Cupcakes**, 🏷️ **Categorias** e 🛵 **Zonas de entrega**.
-- **+ Novo** cria um registro. Clique no nome para editar.
-- **Estoque** = unidades disponíveis hoje. Com 0, o cupcake some da vitrine.
-- **Destaque** coloca o cupcake em "Destaques do dia".
-- **Excluir:** se o item já tiver pedidos (ou a categoria tiver produtos), ele é **desativado** em vez de excluído, para preservar o histórico.
+- **+ Novo** cria um cadastro. Toque no nome para editar.
+- **Estoque** é a quantidade disponível hoje. Com estoque zero, o cupcake sai da vitrine automaticamente.
+- **Destaque** coloca o cupcake na seção "Destaques do dia".
+- **Excluir:** se o cupcake já aparece em algum pedido, ou se a categoria ainda tem cupcakes, o registro é **desativado** em vez de apagado, para não perder o histórico.
 
 ### 3. Administração avançada
-- `/django-admin/` dá acesso total aos dados (apenas superusuário).
+- O endereço `/django-admin/` dá acesso completo aos dados (só para o superusuário).
 
 ---
 
 ## Para desenvolvedores
 
-Veja o [README](../../README.md) para rodar localmente, executar os testes e fazer o deploy.
+Veja o [README](../../README.md) para rodar o projeto localmente, executar os testes e publicar.
