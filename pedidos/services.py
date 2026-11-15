@@ -11,6 +11,7 @@ from django.db.models import Count, F, Sum
 from django.utils import timezone
 
 from catalogo.models import Produto
+from catalogo.texto import normalizar
 from contas.models import Endereco, Usuario
 
 from .carrinho import Carrinho
@@ -27,12 +28,22 @@ class ErroPedido(Exception):
 # --------------------------------------------------------------------------- #
 # Entrega (RN05)
 # --------------------------------------------------------------------------- #
+def taxas_por_bairro() -> dict[str, Decimal]:
+    """Zonas ativas indexadas pelo bairro normalizado ("São Paulo" = "sao paulo")."""
+    return {normalizar(z.bairro): z.taxa for z in ZonaEntrega.objects.filter(ativa=True)}
+
+
+def buscar_zona(bairro: str) -> ZonaEntrega | None:
+    alvo = normalizar(bairro)
+    return next((z for z in ZonaEntrega.objects.filter(ativa=True) if normalizar(z.bairro) == alvo), None)
+
+
 def calcular_taxa(tipo_entrega: str, bairro: str | None) -> Decimal:
     if tipo_entrega == Pedido.Tipo.RETIRADA:
         return Decimal("0.00")
     if not bairro:
         raise ErroPedido("Informe o endereço de entrega.")
-    zona = ZonaEntrega.objects.filter(bairro__iexact=bairro.strip(), ativa=True).first()
+    zona = buscar_zona(bairro)
     if zona is None:
         raise ErroPedido(f"Ainda não entregamos no bairro {bairro}. Escolha retirada na loja.")
     return zona.taxa

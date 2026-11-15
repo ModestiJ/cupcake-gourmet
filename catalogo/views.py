@@ -1,7 +1,7 @@
-from django.db.models import Q
 from django.shortcuts import get_object_or_404, render
 
 from .models import Categoria, Produto
+from .texto import normalizar
 
 
 def vitrine(request):
@@ -17,9 +17,8 @@ def vitrine(request):
 
     termo = request.GET.get("q", "").strip()[:60]
     if termo:
-        produtos = produtos.filter(
-            Q(nome__icontains=termo) | Q(descricao__icontains=termo) | Q(ingredientes__icontains=termo)
-        )
+        # B06: busca sem acentos e sem diferenciar maiúsculas ("Verao" acha "Verão").
+        produtos = produtos.filter(texto_busca__contains=normalizar(termo))
 
     destaques = Produto.objects.disponiveis().filter(destaque=True)[:4] if not (slug or termo) else []
     return render(

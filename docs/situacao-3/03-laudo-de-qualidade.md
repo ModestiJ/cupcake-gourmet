@@ -16,7 +16,7 @@
 
 | Indicador | Resultado | Meta | Situação |
 |---|---|---|---|
-| Testes automatizados | 85/85 passando | 100% | ✅ |
+| Testes automatizados | 105/105 passando | 100% | ✅ |
 | Cobertura de código | 94% | ≥ 70% (RNF06) | ✅ |
 | Cobertura das regras de negócio (`services.py`) | 98% | ≥ 70% | ✅ |
 | Histórias implementadas | 17/18 (US18 adiada para a v2) | Must + Should | ✅ |
@@ -39,7 +39,11 @@
 | ID | Origem (testador) | Descrição | Gravidade | Decisão | Correção aplicada (commit) | Evidência |
 |---|---|---|---|---|---|---|
 | B01 | ✏️ nome do testador | Erro 500 (“Algo deu errado”) ao criar conta no iPhone (Chrome), logo após a mensagem de senha curta. Causa: envio duplicado do formulário (D6). | Alta | Corrigir | ✏️ commit | print do erro + log do Render + teste de regressão |
-| S01 | | (sugestão) | — | | | |
+| B02 | Augusto Wolf | Não há onde alterar a senha na tela Minha conta | Média | Corrigir | ✏️ commit | print da tela + `test_b02_*` |
+| B03 | Augusto Wolf | Sugestão: contador de unidades no carrinho | Baixa | Corrigir | ✏️ commit | print antes/depois + `test_b03_*` |
+| B04 | Augusto Wolf | Hero colado no cabeçalho, sem margem. Causa: `.container` zerava o `padding-top` do `main` em **todas** as páginas (especificidade CSS) | Baixa | Corrigir | ✏️ commit | print antes/depois + `test_b04_*` |
+| B05 | Augusto Wolf | Pouco respiro entre o aviso (toast) e o conteúdo | Baixa | Corrigir (mesma causa do B04) | ✏️ commit | print antes/depois |
+| B06 | Augusto Wolf | Busca por “Verao” não encontra “Blueberry de Verão” (acentos) | Média | Corrigir: busca e bairro de entrega passam a ignorar acentos e maiúsculas | ✏️ commit | print antes/depois + `test_b06_*` |
 
 **Critério de decisão:** defeitos de gravidade alta ou média são corrigidos nesta versão. Sugestões entram se forem compatíveis com o escopo e com o prazo. As demais vão para o backlog da v2, com justificativa.
 

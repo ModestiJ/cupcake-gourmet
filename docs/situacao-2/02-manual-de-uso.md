@@ -37,7 +37,7 @@ Se preferir, crie a sua própria conta: toque em **Entrar** e depois em **Cadast
 ### 1. Escolher os cupcakes
 - A página inicial mostra os **Destaques do dia** e, logo abaixo, todos os sabores.
 - Toque numa **categoria** (Clássicos, Gourmet, Veganos ou Sazonais) para filtrar. Para ver tudo de novo, toque em **Todos**.
-- Use a **busca** para procurar por nome, sabor ou ingrediente (ex.: "pistache").
+- Use a **busca** para procurar por nome, sabor, ingrediente ou categoria (ex.: "pistache"). Acentos e maiúsculas não importam: "verao" encontra "Verão".
 - Toque no cupcake para ver a descrição, os ingredientes e quantas unidades restam hoje.
 
 ### 2. Montar o carrinho
@@ -68,6 +68,7 @@ Se preferir, crie a sua própria conta: toque em **Entrar** e depois em **Cadast
 ### 6. Minha conta
 - Em **Conta** você altera o nome e o telefone, e cadastra, edita ou remove endereços.
 - Marque um endereço como **principal** para que ele já venha selecionado ao finalizar o pedido.
+- Para trocar a senha, toque em **🔑 Alterar senha** (informe a senha atual e a nova duas vezes).
 - Para sair, toque em **Sair**.
 
 ---

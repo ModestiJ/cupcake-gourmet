@@ -47,17 +47,18 @@ h1 { font-size: 1.6rem; } h2 { font-size: 1.25rem; } h3 { font-size: 1.05rem; }
 .barra-inferior a { text-align: center; padding: 8px 4px; font-size: .75rem; color: var(--cacau-2); text-decoration: none; }
 .barra-inferior a span { display: block; font-size: 1.25rem; line-height: 1.2; }
 .barra-inferior a[aria-current="page"] { color: var(--rosa-2); font-weight: 700; }
-main { padding: 20px 0 96px; min-height: 70vh; }
+/* B04/B05: "main.container" para vencer a especificidade de ".container" (que zerava o padding-top). */
+main.container { padding-top: 24px; padding-bottom: 96px; min-height: 70vh; }
 
 @media (min-width: 760px) {
   .nav .esconder-mobile { display: inline-block; }
   .barra-inferior { display: none; }
-  main { padding-bottom: 48px; }
+  main.container { padding-top: 32px; padding-bottom: 48px; }
   h1 { font-size: 2rem; }
 }
 
 /* Mensagens (feedback imediato – RNF04) */
-.mensagens { list-style: none; padding: 0; margin: 0 0 16px; display: grid; gap: 8px; }
+.mensagens { list-style: none; padding: 0; margin: 0 0 20px; display: grid; gap: 8px; }
 .msg { padding: 12px 14px; border-radius: 12px; border-left: 4px solid; display: flex; justify-content: space-between; gap: 12px; align-items: start; }
 .msg-success { background: var(--menta-claro); border-color: var(--menta); }
 .msg-error { background: var(--erro-claro); border-color: var(--erro); }
@@ -97,7 +98,7 @@ main { padding: 20px 0 96px; min-height: 70vh; }
 .selo-neutro { background: #f1ebe6; color: var(--cacau-2); }
 
 /* Vitrine */
-.hero { background: linear-gradient(135deg, #fde4ec, #fff1d6); border-radius: 20px; padding: 20px; margin-bottom: 16px; }
+.hero { background: linear-gradient(135deg, #fde4ec, #fff1d6); border-radius: 20px; padding: 20px; margin-bottom: 20px; }
 .busca { display: flex; gap: 8px; margin: 12px 0; }
 .busca input { flex: 1; }
 .chips { display: flex; gap: 8px; overflow-x: auto; padding: 4px 0 12px; scrollbar-width: none; }

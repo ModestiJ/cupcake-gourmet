@@ -11,7 +11,7 @@ Projeto Integrador Transdisciplinar em Engenharia de Software **II** (Cruzeiro d
 | **Vídeo de apresentação** | _link_ |
 | **Stack** | Python 3.14 · Django 6 (MVC) · PostgreSQL · HTML/CSS/JS · pytest |
 | **Hospedagem** | Render (web) + Neon (PostgreSQL) |
-| **Qualidade** | 85 testes automatizados · 94% de cobertura · CI no GitHub Actions |
+| **Qualidade** | 105 testes automatizados · 94% de cobertura · CI no GitHub Actions |
 
 ![Telas no celular](docs/situacao-2/telas/mobile-vitrine-detalhe-cadastro-entregas.png)
 
@@ -45,7 +45,7 @@ Acesse http://127.0.0.1:8000. Sem `DATABASE_URL`, o projeto usa SQLite.
 ## Testes
 
 ```bash
-coverage run -m pytest            # 85 testes: unitários, integração e aceitação
+coverage run -m pytest            # 105 testes: unitários, integração e aceitação
 pytest -m aceitacao               # só os cenários Gherkin das histórias
 coverage report
 python scripts/smoke_prod.py https://cupcake-gourmet-2uvn.onrender.com   # teste de sistema E2E em produção

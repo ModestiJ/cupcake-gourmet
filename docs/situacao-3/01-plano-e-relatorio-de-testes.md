@@ -8,7 +8,7 @@ flowchart LR
     R[Requisitos<br/>US + RN + RNF] --> A[Análise<br/>UML + DER] --> AR[Arquitetura<br/>MVC + services] --> C[Código]
     end
     subgraph Validação
-    TU[Teste unitário<br/>41 testes] --> TI[Teste de integração<br/>39 testes] --> TS[Teste de sistema<br/>roteiro manual + CI em Postgres] --> TA[Teste de aceitação<br/>5 cenários Gherkin + 5 testadores]
+    TU[Teste unitário<br/>49 testes] --> TI[Teste de integração<br/>51 testes] --> TS[Teste de sistema<br/>roteiro manual + CI em Postgres] --> TA[Teste de aceitação<br/>5 cenários Gherkin + 5 testadores]
     end
     C -.-> TU
     AR -.-> TI
@@ -41,10 +41,10 @@ Executado em 14/11/2026 (Windows 11, Python 3.14.2, Django 6.0.10, SQLite). O CI
 
 | Nível | Testes | Passaram | Falharam |
 |---|---|---|---|
-| Unitário | 41 | 41 | 0 |
-| Integração | 39 | 39 | 0 |
+| Unitário | 49 | 49 | 0 |
+| Integração | 51 | 51 | 0 |
 | Aceitação | 5 | 5 | 0 |
-| **Total** | **85** | **85** | **0** |
+| **Total** | **105** | **105** | **0** |
 
 **Cobertura de código: 94%** (meta do RNF06: 70%)
 
@@ -87,6 +87,10 @@ Executado em 14/11/2026 (Windows 11, Python 3.14.2, Django 6.0.10, SQLite). O CI
 | Carrinho → checkout com taxa do bairro (Vila Mariana R$ 8,00) → Pix | ✅ |
 | Recusa simulada → nova tentativa aprovada → linha do tempo | ✅ |
 | Cancelamento → pagamento estornado → estoque devolvido | ✅ |
+
+### Correções a partir dos testadores
+
+Os apontamentos dos testadores externos (B01–B06) estão consolidados no [laudo de qualidade](03-laudo-de-qualidade.md#4-defeitos-e-sugestões-consolidados-). Cada correção tem teste de regressão em `tests/test_feedback_testadores.py` ou `tests/test_integracao_views.py`.
 
 ## 5. Roteiro de teste de sistema (manual)
 

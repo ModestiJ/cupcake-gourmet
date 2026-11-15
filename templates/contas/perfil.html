@@ -26,6 +26,9 @@
       {% include "_campos.html" %}
       <button class="btn btn-primario btn-bloco" type="submit">Salvar</button>
     </form>
+    <hr style="border:0;border-top:1px solid var(--borda);margin:16px 0">
+    <h2>Segurança</h2>
+    <a class="btn btn-secundario btn-bloco" href="{% url 'contas:alterar_senha' %}">🔑 Alterar senha</a>
   </aside>
 </div>
 {% endblock %}

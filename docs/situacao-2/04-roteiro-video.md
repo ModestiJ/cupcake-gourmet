@@ -12,5 +12,5 @@ Grave a tela com OBS ou com a Barra de Jogos do Windows (Win+Alt+R). Deixe duas 
 | 3:30–4:30 | Painel admin | Indicadores do dia, alerta de estoque, fila. Tentar avançar um pedido Pix não pago (RN08 bloqueia). Avançar o pedido pago até "Entregue". |
 | 4:30–5:00 | Acompanhamento | Voltar à aba do cliente: linha do tempo completa. Mostrar o cancelamento em outro pedido "Recebido" e o estoque voltando. |
 | 5:00–5:40 | Cadastros | Criar um cupcake novo e mostrar que ele aparece na vitrine. Excluir um produto com pedidos (vira desativado). |
-| 5:40–6:30 | Qualidade | Terminal: `coverage run -m pytest` mostrando 85 testes passando e 94% de cobertura. Explicar rapidamente MVC + services + Strategy de pagamento. |
+| 5:40–6:30 | Qualidade | Terminal: `coverage run -m pytest` mostrando 105 testes passando e 94% de cobertura. Explicar rapidamente MVC + services + Strategy de pagamento. |
 | 6:30–7:00 | Encerramento | Próximos passos (gateway real, notificação por e-mail – US18) e convite para testar pelo link. |

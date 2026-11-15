@@ -57,6 +57,18 @@ class EntrarView(auth_views.LoginView):
         return super().get_default_redirect_url()
 
 
+class AlterarSenhaView(auth_views.PasswordChangeView):
+    """B02 – troca de senha pelo próprio usuário (mantém a sessão ativa)."""
+
+    template_name = "contas/alterar_senha.html"
+    success_url = "/conta/perfil/"
+
+    def form_valid(self, form):
+        resposta = super().form_valid(form)
+        messages.success(self.request, "Senha alterada com sucesso.")
+        return resposta
+
+
 class SairView(auth_views.LogoutView):
     def post(self, request, *args, **kwargs):
         resposta = super().post(request, *args, **kwargs)

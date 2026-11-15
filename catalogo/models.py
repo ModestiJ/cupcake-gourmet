@@ -4,6 +4,8 @@ from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils.text import slugify
 
+from .texto import normalizar
+
 ILUSTRACOES = [
     ("img/cupcakes/morango.svg", "Morango"),
     ("img/cupcakes/chocolate.svg", "Chocolate"),
@@ -32,6 +34,9 @@ class Categoria(models.Model):
         if not self.slug:
             self.slug = slugify(self.nome)
         super().save(*args, **kwargs)
+        # O nome da categoria faz parte do texto de busca dos produtos.
+        for produto in self.produtos.all():
+            produto.save(update_fields=["texto_busca"])
 
     def __str__(self):
         return self.nome
@@ -57,10 +62,21 @@ class Produto(models.Model):
     imagem = models.CharField(max_length=120, choices=ILUSTRACOES, default=ILUSTRACOES[0][0])
     ativo = models.BooleanField(default=True)
     destaque = models.BooleanField(default=False)
+    texto_busca = models.TextField(
+        blank=True, editable=False, help_text="Nome, descrição, ingredientes e categoria normalizados (sem acentos)."
+    )
     criado_em = models.DateTimeField(auto_now_add=True)
     atualizado_em = models.DateTimeField(auto_now=True)
 
     objects = ProdutoQuerySet.as_manager()
+
+    def montar_texto_busca(self) -> str:
+        partes = [self.nome, self.descricao, self.ingredientes, self.categoria.nome if self.categoria_id else ""]
+        return normalizar(" ".join(partes))
+
+    def save(self, *args, **kwargs):
+        self.texto_busca = self.montar_texto_busca()
+        super().save(*args, **kwargs)
 
     class Meta:
         db_table = "produto"

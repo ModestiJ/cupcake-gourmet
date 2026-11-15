@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
 from catalogo.models import Produto
+from catalogo.texto import normalizar
 from contas.views import destino_seguro
 
 from . import services
@@ -71,9 +72,9 @@ def checkout(request):
         return redirect("catalogo:vitrine")
 
     enderecos = list(request.user.enderecos.all())
-    zonas = {z.bairro.lower(): z.taxa for z in ZonaEntrega.objects.filter(ativa=True)}
+    zonas = services.taxas_por_bairro()
     for e in enderecos:
-        e.taxa = zonas.get(e.bairro.lower())  # None = bairro não atendido
+        e.taxa = zonas.get(normalizar(e.bairro))  # None = bairro não atendido
 
     if request.method == "POST":
         tipo = request.POST.get("tipo_entrega", "")
