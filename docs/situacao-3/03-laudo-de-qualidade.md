@@ -21,7 +21,7 @@
 | Cobertura das regras de negócio (`services.py`) | 98% | ≥ 70% | ✅ |
 | Histórias implementadas | 17/18 (US18 adiada para a v2) | Must + Should | ✅ |
 | `check --deploy` (segurança Django) | sem erros. Avisos de HSTS em subdomínio não se aplicam ao domínio do Render. | sem erros | ✅ |
-| CI em PostgreSQL (GitHub Actions) | 85/85 passando ([run](https://github.com/ModestiJ/cupcake-gourmet/actions/runs/43654261082)) | verde | ✅ |
+| CI em PostgreSQL (GitHub Actions) | 105/105 passando ([run](https://github.com/ModestiJ/cupcake-gourmet/actions/runs/43713289570)) | verde | ✅ |
 | Teste de sistema E2E em produção (`scripts/smoke_prod.py`) | 23/23 verificações | 100% | ✅ |
 
 ## 3. Resultado da validação com testadores ✏️
@@ -38,12 +38,12 @@
 
 | ID | Origem (testador) | Descrição | Gravidade | Decisão | Correção aplicada (commit) | Evidência |
 |---|---|---|---|---|---|---|
-| B01 | ✏️ nome do testador | Erro 500 (“Algo deu errado”) ao criar conta no iPhone (Chrome), logo após a mensagem de senha curta. Causa: envio duplicado do formulário (D6). | Alta | Corrigir | ✏️ commit | print do erro + log do Render + teste de regressão |
-| B02 | Augusto Wolf | Não há onde alterar a senha na tela Minha conta | Média | Corrigir | ✏️ commit | print da tela + `test_b02_*` |
-| B03 | Augusto Wolf | Sugestão: contador de unidades no carrinho | Baixa | Corrigir | ✏️ commit | print antes/depois + `test_b03_*` |
-| B04 | Augusto Wolf | Hero colado no cabeçalho, sem margem. Causa: `.container` zerava o `padding-top` do `main` em **todas** as páginas (especificidade CSS) | Baixa | Corrigir | ✏️ commit | print antes/depois + `test_b04_*` |
-| B05 | Augusto Wolf | Pouco respiro entre o aviso (toast) e o conteúdo | Baixa | Corrigir (mesma causa do B04) | ✏️ commit | print antes/depois |
-| B06 | Augusto Wolf | Busca por “Verao” não encontra “Blueberry de Verão” (acentos) | Média | Corrigir: busca e bairro de entrega passam a ignorar acentos e maiúsculas | ✏️ commit | print antes/depois + `test_b06_*` |
+| B01 | ✏️ nome do testador | Erro 500 (“Algo deu errado”) ao criar conta no iPhone (Chrome), logo após a mensagem de senha curta. Causa: envio duplicado do formulário (D6). | Alta | Corrigir | `386a74f` | print do erro + log do Render + teste de regressão |
+| B02 | Augusto Wolf | Não há onde alterar a senha na tela Minha conta | Média | Corrigir | `c57d159` | print da tela + `test_b02_*` |
+| B03 | Augusto Wolf | Sugestão: contador de unidades no carrinho | Baixa | Corrigir | `c57d159` | print antes/depois + `test_b03_*` |
+| B04 | Augusto Wolf | Hero colado no cabeçalho, sem margem. Causa: `.container` zerava o `padding-top` do `main` em **todas** as páginas (especificidade CSS) | Baixa | Corrigir | `c57d159` | print antes/depois + `test_b04_*` |
+| B05 | Augusto Wolf | Pouco respiro entre o aviso (toast) e o conteúdo | Baixa | Corrigir (mesma causa do B04) | `c57d159` | print antes/depois |
+| B06 | Augusto Wolf | Busca por “Verao” não encontra “Blueberry de Verão” (acentos) | Média | Corrigir: busca e bairro de entrega passam a ignorar acentos e maiúsculas | `c57d159` | print antes/depois + `test_b06_*` |
 
 **Critério de decisão:** defeitos de gravidade alta ou média são corrigidos nesta versão. Sugestões entram se forem compatíveis com o escopo e com o prazo. As demais vão para o backlog da v2, com justificativa.
 
