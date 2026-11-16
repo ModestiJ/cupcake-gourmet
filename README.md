@@ -8,7 +8,7 @@ Projeto Integrador Transdisciplinar em Engenharia de Software **II** (Cruzeiro d
 | | |
 |---|---|
 | **App em produção** | https://cupcake-gourmet-2uvn.onrender.com (o 1º acesso pode levar ~50 s para "acordar") |
-| **Vídeo de apresentação** | _link_ |
+| **Vídeo de apresentação** | https://youtu.be/BUVnvgJHh4c |
 | **Stack** | Python 3.14 · Django 6 (MVC) · PostgreSQL · HTML/CSS/JS · pytest |
 | **Hospedagem** | Render (web) + Neon (PostgreSQL) |
 | **Qualidade** | 105 testes automatizados · 94% de cobertura · CI no GitHub Actions |
